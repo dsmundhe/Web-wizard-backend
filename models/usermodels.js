@@ -14,6 +14,9 @@ const UserModel = new mongoose.Schema({
         type: String,
         required: true,
     },
+    data:{
+        type:[],
+    }
 
 }, {
     timestamps: true

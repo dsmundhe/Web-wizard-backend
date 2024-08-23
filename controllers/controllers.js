@@ -37,4 +37,19 @@ const login = async (req, res) => {
         res.json({ msg: error.message });
     }
 }
-module.exports = { signup, login }
+const addData = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email, password });
+        if (user) {
+            res.json({ msg: 'Data added....' })
+        }
+        else if (!user) {
+            res.json({ msg: 'User not found' })
+        }
+       
+    } catch (error) {
+        res.json({ msg: error.message })
+    }
+}
+module.exports = { signup, login,addData }
