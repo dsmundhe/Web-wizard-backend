@@ -14,10 +14,18 @@ const UserModel = new mongoose.Schema({
         type: String,
         required: true,
     },
-    data:{
-        type:[],
+    data: {
+        type: [],
     }
-
+    ,
+    mobile: {
+        type: String,
+        required: true
+    },
+    field:{
+        type:String,
+        required:true,
+    }
 }, {
     timestamps: true
 })

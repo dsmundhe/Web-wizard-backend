@@ -1,19 +1,24 @@
-const User = require('../models/usermodels')
+const User = require('../models/usermodels');
+const Mentor = require('../models/mentormodel');
 const signup = async (req, res) => {
     try {
-        const { name, email, password } = req.body
+        const { name, email, password, mobile, data, field } = req.body
         const newData = User({
             name,
             email,
-            password
+            password,
+            mobile,
+            data,
+            field
         });
-        const user = User.findOne({ email });
+        const user = await User.findOne({ email });
         if (user) {
             res.json({ msg: "User already exist....." })
         }
-        console.log(name, email);
-        await newData.save();
-        res.json({ msg: 'Sing up successful....' })
+        else if (!user) {
+            await newData.save();
+            res.json({ msg: 'Sing up successful....' })
+        }
     } catch (error) {
         res.send(error.message)
     }
@@ -53,4 +58,50 @@ const addData = async (req, res) => {
         res.json({ msg: error.message })
     }
 }
-module.exports = { signup, login, addData }
+const mentorsignup = async (req, res) => {
+    try {
+        const { name, email, password, mobile, field } = req.body;
+        const user = await Mentor.findOne({ email });
+        const newData = await Mentor({
+            email,
+            password,
+            mobile,
+            field,
+            name
+        })
+        if (user) {
+
+            res.json({ msg: 'Mentor already exist' });
+        }
+        else if (!user) {
+            await newData.save();
+            res.json({ msg: "Singup Successful..." })
+        }
+    } catch (error) {
+        res.json({ msg: error.message })
+    }
+}
+const mentorlogin = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const user = await Mentor.findOne({ email, password });
+        if (user) {
+            res.json({ msg: 'Login successful....' });
+        }
+        else if (!user) {
+            res.json({ msg: "Check email and passeord....." })
+        }
+    } catch (error) {
+        res.json({ msg: error.message })
+    }
+}
+const getUsers = async (req, res) => {
+    try {
+        const data = await User.find();
+
+        res.json({ data });
+    } catch (error) {
+        res.json({ msg: error.message })
+    }
+}
+module.exports = { signup, login, addData, mentorsignup, mentorlogin, getUsers }
