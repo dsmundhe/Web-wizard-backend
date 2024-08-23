@@ -12,7 +12,7 @@ const UserModel = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        
     },
     data: {
         type: [],
@@ -20,11 +20,11 @@ const UserModel = new mongoose.Schema({
     ,
     mobile: {
         type: String,
-        required: true
+       
     },
     field:{
         type:String,
-        required:true,
+        
     }
 }, {
     timestamps: true

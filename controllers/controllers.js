@@ -13,11 +13,11 @@ const signup = async (req, res) => {
         });
         const user = await User.findOne({ email });
         if (user) {
-            res.json({ msg: "User already exist....." })
+            res.json({ msg: "User already exist.....", result: false })
         }
         else if (!user) {
             await newData.save();
-            res.json({ msg: 'Sing up successful....' })
+            res.json({ msg: 'Sing up successful....', result: true })
         }
     } catch (error) {
         res.send(error.message)
@@ -60,12 +60,12 @@ const addData = async (req, res) => {
 }
 const mentorsignup = async (req, res) => {
     try {
-        const { name, email, password, mobile, field } = req.body;
+        const { name, email, password, phone, field } = req.body;
         const user = await Mentor.findOne({ email });
         const newData = await Mentor({
             email,
             password,
-            mobile,
+            phone,
             field,
             name
         })
@@ -86,10 +86,10 @@ const mentorlogin = async (req, res) => {
         const { email, password } = req.body
         const user = await Mentor.findOne({ email, password });
         if (user) {
-            res.json({ msg: 'Login successful....' });
+            res.json({ msg: 'Login successful....', result: true });
         }
         else if (!user) {
-            res.json({ msg: "Check email and passeord....." })
+            res.json({ msg: "Check email and password.....", result: false })
         }
     } catch (error) {
         res.json({ msg: error.message })

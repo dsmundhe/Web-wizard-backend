@@ -12,11 +12,11 @@ const mentorModel = new mongoose.Schema({
     },
     password: {
         type: String,
-        requried: true
+        
     },
     field: {
         type: String,
-        requried: true
+         
     }
 })
 const Mentor = mongoose.model('mentor', mentorModel);
